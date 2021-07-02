@@ -9,7 +9,7 @@ const capitalCities = [
     },
     {
         name: "Washington",
-        tz: "US/Eastern"
+        tz: "America/New_York"
     },
     {
         name: "Beijing",
@@ -18,7 +18,11 @@ const capitalCities = [
     {
         name: "Moscou",
         tz: "Europe/Moscow"
-    }
+    },
+    // {
+    //     name: "undefined",
+    //     tz: "undefined"
+    // }
 ];
 
 // On exporte notre module afin qu'il soit accessible depuis l'exterieur
