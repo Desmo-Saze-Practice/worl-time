@@ -1,22 +1,17 @@
-/**************
-    MODULES
- **************/
-
 // import express module
 const express = require("express");
 const router = express.Router();
 
-// import cities module
-const cities = require('./my_modules/capitalCities');
+const cityHour = require('./my_modules/cityHour');
 
 // for timezone module
 var dayjs = require('dayjs');
-
 var utc = require('dayjs/plugin/utc');
 var timezone = require('dayjs/plugin/timezone'); // dependent on utc plugin
-const capitalCities = require("./my_modules/capitalCities");
 dayjs.extend(utc);
 dayjs.extend(timezone);
+require('dayjs/locale/fr');
+dayjs.locale('fr');
 
 /*************
     ROUTES
@@ -35,22 +30,17 @@ router.get('/city/:cityName', (req, res) => {
 
     const cityName = req.params.cityName;
 
-    const city = capitalCities.find((capitalCity) => {
-        return cityName === capitalCity.name.toLowerCase();
-    });
+    const city = cityHour.getCity(cityName)
 
     if (!city) {
-        res.status(404).send("Error 404");
-        console.log(req.params.cityName);
-
+        res
+            .status(404)
+            .send("Error 404");
         return;
     }
 
-    dayjs.tz.setDefault(city.tz);
-    let date = dayjs().format('LLLL');
-    let time = dayjs().tz(city.tz).format('HH:mm');
-    console.log(req.params.cityName);
-    res.send(`Dans la ville de ${cityName} il est ${time}.`);
+    res.send(`Dans la ville de ${city.name} il est ${city.time}.`);
+
 });
 
 module.exports = router;
